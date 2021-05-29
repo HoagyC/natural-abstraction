@@ -1,5 +1,7 @@
 import sympy as sym
 
+from sympy.utilities.autowrap import autowrap, binary_function
+
 
 def add_vectors(angle1, length1, angle2, length2):
     """Returns the sum of two vectors"""
@@ -54,8 +56,12 @@ def auto_diff_spring():
 
     in_vars = [x1, y1, a1, s1, x2, y2, a2, s2]
     out_vars = [x1n, y1n, a1n, s1n, x2n, y2n, a2n, s2n]
+    extra_vars = [mass1, mass2, sp_l, sp_s]
 
-    M = [[sym.diff(out_v, in_v) for in_v in in_vars] for out_v in out_vars]
+    def wrap(sym_eq):
+        return autowrap(sym_eq, args=in_vars + extra_vars)
+
+    M = [[wrap(sym.diff(out_v, in_v)) for in_v in in_vars] for out_v in out_vars]
 
     return M
 
@@ -66,19 +72,23 @@ def auto_diff_accelerate():
     a = sym.Symbol("a")
     s = sym.Symbol("s")
     a_a = sym.Symbol("a_a")
-    s_s = sym.Symbol("a_s")
+    a_s = sym.Symbol("a_s")
 
     x_n = sym.Symbol("x_n")
     y_n = sym.Symbol("y_n")
     # a_n = sym.Symbol("a_n")
     # s_n = sym.Symbol("s_n")
 
-    a_n, s_n = add_vectors(a, s, a_a, s_s)
+    a_n, s_n = add_vectors(a, s, a_a, a_s)
 
     in_vars = [x, y, a, s]
     out_vars = [x_n, y_n, a_n, s_n]
+    extra_vars = [a_a, a_s]
 
-    M = [[sym.diff(out_v, in_v) for in_v in in_vars] for out_v in out_vars]
+    def wrap(sym_eq):
+        return autowrap(sym_eq, args=in_vars + extra_vars)
+
+    M = [[wrap(sym.diff(out_v, in_v)) for in_v in in_vars] for out_v in out_vars]
 
     return M
 
@@ -129,8 +139,12 @@ def auto_diff_collide():
 
     in_vars = [x1, y1, a1, s1, x2, y2, a2, s2]
     out_vars = [x1n, y1n, a1n, s1n, x2n, y2n, a2n, s2n]
+    extra_vars = [mass1, mass2, e1, e2, size1, size2]
 
-    M = [[sym.diff(out_v, in_v) for in_v in in_vars] for out_v in out_vars]
+    def wrap(sym_eq):
+        return autowrap(sym_eq, args=in_vars + extra_vars)
+
+    M = [[wrap(sym.diff(out_v, in_v)) for in_v in in_vars] for out_v in out_vars]
 
     return M
 

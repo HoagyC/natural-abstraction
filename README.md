@@ -1,0 +1,3 @@
+Work on the natural abstraction hypothesis as explained in this Alignment Forum post: [Testing the Natural Abstraction Hypothesis](https://www.alignmentforum.org/posts/cy3BhHrGinZCp3LXE/testing-the-natural-abstraction-hypothesis-project-intro).
+
+Builds on the simple particle simulator by Peter Collinridge in written in pygame ([blog posts](https://www.petercollingridge.co.uk/tutorials/pygame-physics-simulation/), [github](https://github.com/petercollingridge/code-for-blog/tree/master/pygame%20physics%20simulation)) by adding in backpropation through the timesteps of the simulation.
